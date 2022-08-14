@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Used LinearLayout to easily align elements vertically and horizontally -->
+
+<!-- Used LinearLayout to align shoe details vertically-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shoeItemLayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/shoe_item_height"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/shoeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="20sp"
+        tools:text="@string/shoe_name_text" />
+
+    <TextView
+        android:id="@+id/shoeSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:fontFamily="@font/roboto"
+        android:textSize="16sp"
+        tools:text="@string/shoe_size_text" />
+
+    <TextView
+        android:id="@+id/shoeDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:fontFamily="@font/roboto"
+        tools:text="@string/shoe_description_text" />
+</LinearLayout>

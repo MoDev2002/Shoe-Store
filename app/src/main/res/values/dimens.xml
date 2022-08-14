@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_side_margin">64dp</dimen>
+    <dimen name="text_edit_padding">12dp</dimen>
+    <dimen name="text_padding">8dp</dimen>
+    <dimen name="text_margin">8dp</dimen>
+    <dimen name="button_margin">16dp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
+    <dimen name="shoe_item_height">150dp</dimen>
+</resources>
