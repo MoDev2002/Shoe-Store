@@ -4,6 +4,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -31,7 +33,7 @@ class ShoeList : Fragment() {
         sharedViewModel.shoeList.observe(viewLifecycleOwner) { shoeList ->
             binding.shoeList.removeAllViews()
             for (shoe in shoeList) {
-                addShoe(shoe.name, shoe.size, shoe.description, shoe.company)
+                addShoe(shoe.name, shoe.size, shoe.company, shoe.description)
             }
         }
 
@@ -54,10 +56,11 @@ class ShoeList : Fragment() {
     }
 
     private fun addShoe(name : String, size : Double, company : String, description : String) {
-        val view = layoutInflater.inflate(R.layout.shoe_item, null)
+        val view = layoutInflater.inflate(R.layout.shoe_item, binding.shoeList, false)
         view.shoeName.text = name
         view.shoeSize.text = size.toString()
+        view.shoeCompany.text = company
         view.shoeDescription.text = description
-        binding.shoeList.addView(view.shoeItemLayout)
+        binding.shoeList.addView(view)
     }
 }

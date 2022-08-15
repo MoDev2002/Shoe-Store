@@ -2,32 +2,53 @@
 
 <!-- Used LinearLayout to align shoe details vertically-->
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shoeItemLayout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/shoe_item_height"
+    android:layout_margin="@dimen/text_margin"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/shoeName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:fontFamily="@font/roboto_bold"
-        android:textSize="20sp"
-        tools:text="@string/shoe_name_text" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/shoeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="20sp"
+            tools:text="@string/shoe_name_text" />
+
+        <TextView
+            android:id="@+id/shoeSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:fontFamily="@font/roboto"
+            android:textAlignment="center"
+            android:textColor="@android:color/primary_text_light"
+            android:textSize="18sp"
+            tools:text="@string/shoe_size_text" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/shoeSize"
+        android:id="@+id/shoeCompany"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:layout_marginBottom="@dimen/text_margin"
         android:fontFamily="@font/roboto"
-        android:textSize="16sp"
-        tools:text="@string/shoe_size_text" />
+        android:text="@string/shoe_company_text"
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/shoeDescription"
@@ -35,5 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:fontFamily="@font/roboto"
+        android:textColor="@android:color/primary_text_light"
         tools:text="@string/shoe_description_text" />
 </LinearLayout>
