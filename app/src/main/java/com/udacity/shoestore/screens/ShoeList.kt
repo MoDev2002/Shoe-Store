@@ -1,41 +1,63 @@
 package com.udacity.shoestore.screens
 
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
-import androidx.core.view.setMargins
 import androidx.fragment.app.Fragment
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.udacity.shoestore.R
+import com.udacity.shoestore.database.ShoeDatabase
 import com.udacity.shoestore.databinding.ShoelistFragmentBinding
 import com.udacity.shoestore.viewModels.ShoeViewModel
-import kotlinx.android.synthetic.main.shoe_item.view.*
-import java.net.URL
+import com.udacity.shoestore.viewModels.ShoeViewModelFactory
+
 
 class ShoeList : Fragment() {
 
     private val binding by lazy {
         ShoelistFragmentBinding.inflate(layoutInflater)
     }
-    private val sharedViewModel : ShoeViewModel by activityViewModels()
+
+    private lateinit var sharedViewModel: ShoeViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val application = requireNotNull(this.activity).application
+        val dataSource = ShoeDatabase.getInstance(application).shoeDatabaseDao
+
+        //Initialize the ViewModel
+        val sharedViewModelFactory = ShoeViewModelFactory(dataSource)
+        sharedViewModel = ViewModelProvider(requireActivity(), sharedViewModelFactory).get(ShoeViewModel::class.java)
+
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sharedViewModel.shoeList.observe(viewLifecycleOwner) { shoeList ->
-            binding.shoeList.removeAllViews()
-            for (shoe in shoeList) {
-                addShoe(shoe.name, shoe.size, shoe.company, shoe.description)
-            }
-        }
+
+        //Initialize the Database
+
+        binding.lifecycleOwner = this
+        binding.viewModel = sharedViewModel
+
+        val manager = LinearLayoutManager(activity)
+
+        val adapter = ShoeAdapter(OnClickListener { id -> sharedViewModel.deleteShoe(id) } )
+
+        sharedViewModel.shoeList.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
+
+
+        binding.shoeRecyclerView.layoutManager = manager
+        binding.shoeRecyclerView.adapter = adapter
 
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(ShoeListDirections.actionShoeListToShoeDetail())
@@ -51,16 +73,15 @@ class ShoeList : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        return NavigationUI.onNavDestinationSelected(item, view!!.findNavController()) || super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            R.id.clearItems -> sharedViewModel.deleteAll()
+            R.id.loginFragment -> NavigationUI.onNavDestinationSelected(
+                item,
+                view!!.findNavController()
+            )
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
-    private fun addShoe(name : String, size : Double, company : String, description : String) {
-        val view = layoutInflater.inflate(R.layout.shoe_item, binding.shoeList, false)
-        view.shoeName.text = name
-        view.shoeSize.text = size.toString()
-        view.shoeCompany.text = company
-        view.shoeDescription.text = description
-        binding.shoeList.addView(view)
-    }
+
 }

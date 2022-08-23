@@ -1,25 +1,28 @@
 package com.udacity.shoestore.viewModels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.udacity.shoestore.models.Shoe
+import com.udacity.shoestore.database.Shoe
+import com.udacity.shoestore.database.ShoeDatabase
+import com.udacity.shoestore.database.ShoeDatabaseDao
+import kotlinx.coroutines.*
+import timber.log.Timber
 
-class ShoeViewModel : ViewModel() {
-    private lateinit var shoe : Shoe
-    private val _shoeList = MutableLiveData<MutableList<Shoe>>()
-    val shoeList : LiveData<MutableList<Shoe>>
-        get() = _shoeList
+class ShoeViewModel(val database : ShoeDatabaseDao) : ViewModel() {
+
+    private var viewModelJob = Job()
+    private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
+    val shoeList = database.getAll()
+
     var shoeName = ""
     var shoeSize = ""
     var shoeCompany = ""
     var shoeDescription = ""
 
     init {
-        _shoeList.value = mutableListOf()
-        addShoe("Adidas Max", 42.0, "Adidas", "A shoes for running like a champ")
-        addShoe("Nike Air", 39.0, "Nike", "A shoes for the gym")
+
     }
     fun resetNewShoe() {
         shoeName = ""
@@ -29,19 +32,39 @@ class ShoeViewModel : ViewModel() {
 
     }
     fun addNewShoe() : Boolean {
-        if(
-            shoeName.isBlank() ||
-            shoeSize.isBlank() ||
-            shoeCompany.isBlank() ||
-            shoeDescription.isBlank()) return false
+        uiScope.launch {
+            if(
+                shoeName.isBlank() ||
+                shoeSize.isBlank() ||
+                shoeCompany.isBlank() ||
+                shoeDescription.isBlank()) return@launch
 
-        addShoe(shoeName, shoeSize.toDouble(), shoeCompany, shoeDescription)
-
+            insert(shoeName, shoeSize.toDouble(), shoeCompany, shoeDescription)
+        }
         return true
     }
-    private fun addShoe(name : String, size : Double, company : String, description : String){
-        val newShoe = Shoe(name, size, company, description)
-            _shoeList.value!!.add(newShoe)
+    private suspend fun insert(name : String, size : Double, company : String, description : String){
+        val newShoe = Shoe(name = name, size = size, company = company, description = description)
+        withContext(Dispatchers.IO) {
+            database.insert(newShoe)
         }
+    }
+
+    fun deleteShoe(id : Long){
+        uiScope.launch {
+            withContext(Dispatchers.IO) {
+                database.deleteShoe(id)
+            }
+        }
+    }
+
+    fun deleteAll() : Boolean {
+        uiScope.launch{
+            withContext(Dispatchers.IO) {
+                database.deleteAll()
+            }
+        }
+        return true
+    }
     }
 

@@ -8,4 +8,10 @@
         android:title="@string/sign_out"
         android:visible="true"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/clearItems"
+        android:icon="@drawable/ic_baseline_delete_forever"
+        android:title="@string/clear"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
 </menu>

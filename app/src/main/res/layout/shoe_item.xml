@@ -2,56 +2,122 @@
 
 <!-- Used LinearLayout to align shoe details vertically-->
 
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/shoeItemLayout"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="shoe"
+            type="com.udacity.shoestore.database.Shoe" />
+        <variable
+            name="clickListener"
+            type="com.udacity.shoestore.screens.OnClickListener" />
+    </data>
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/shoe_item_height"
-    android:layout_margin="@dimen/text_margin"
-    android:orientation="vertical">
-
-    <LinearLayout
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/shoeItemLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/shoeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:fontFamily="@font/roboto_bold"
-            android:textSize="20sp"
-            tools:text="@string/shoe_name_text" />
-
-        <TextView
-            android:id="@+id/shoeSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:fontFamily="@font/roboto"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            tools:text="@string/shoe_size_text" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/shoeCompany"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/shoe_item_height"
         android:layout_margin="@dimen/text_margin"
-        android:fontFamily="@font/roboto"
-        android:text="@string/shoe_company_text"
-        android:textSize="16sp" />
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="@dimen/button_margin"
+        app:cardElevation="4dp"
+        app:contentPadding="@dimen/text_padding">
 
-    <TextView
-        android:id="@+id/shoeDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:fontFamily="@font/roboto"
-        tools:text="@string/shoe_description_text" />
-</LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/shoeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:shoeName="@{shoe}"
+                tools:text="@string/shoe_name_text" />
+
+            <TextView
+                android:id="@+id/shoeSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/shoeName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/shoeName"
+                app:layout_constraintTop_toTopOf="@+id/shoeName"
+                app:shoeSize="@{shoe}"
+                tools:text="@string/shoe_size_text" />
+
+            <TextView
+                android:id="@+id/shoeCompany"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto"
+                app:shoeCompany="@{shoe}"
+                tools:text="@string/shoe_company_text"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/shoeName"
+                app:layout_constraintTop_toBottomOf="@+id/shoeName"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/shoeDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/shoeCompany"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/shoeCompany"
+                app:layout_constraintTop_toBottomOf="@+id/shoeCompany"
+                app:layout_constraintVertical_bias="0.0"
+                app:shoeDescription="@{shoe}"
+                tools:text="@string/shoe_description_text" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:onClick="@{() -> clickListener.onClick(shoe)}"
+                app:backgroundTint="@color/colorAccent"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/shoeSize"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/shoeDescription"
+                app:layout_constraintTop_toBottomOf="@+id/shoeSize"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_baseline_delete_24"
+                tools:ignore="TouchTargetSizeCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
+</layout>

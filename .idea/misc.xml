@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store - Room RecyclerView/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.139" />
+        <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store - Room RecyclerView/app/src/main/res/drawable/ic_baseline_delete_forever.xml" value="0.139" />
+        <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store - Room RecyclerView/app/src/main/res/layout/shoe_item.xml" value="0.25" />
+        <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store - Room RecyclerView/app/src/main/res/layout/shoelist_fragment.xml" value="0.25" />
+        <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store - Room RecyclerView/app/src/main/res/menu/signout_menu.xml" value="0.25" />
         <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store/app/src/main/res/drawable-anydpi/instructions_illustration.xml" value="0.139" />
         <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store/app/src/main/res/drawable-anydpi/welcome_illustration.xml" value="0.139" />
         <entry key="..\:/Users/tamer/OneDrive/Desktop/Learning/Android/Projects/Shoe Store/app/src/main/res/drawable/edit_text_theme.xml" value="0.139" />
