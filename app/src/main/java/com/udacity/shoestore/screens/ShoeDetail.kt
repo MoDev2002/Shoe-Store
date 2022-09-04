@@ -27,11 +27,11 @@ class ShoeDetail : Fragment() {
         //assigning EditText fields to variables
         binding.saveButton.setOnClickListener {
             sharedViewModel.addNewShoe()
-            findNavController().navigate(ShoeDetailDirections.actionShoeDetailToShoeList())
+            findNavController().navigateUp()
         }
 
         binding.cancelButton.setOnClickListener {
-            findNavController().navigate(ShoeDetailDirections.actionShoeDetailToShoeList())
+            findNavController().navigateUp()
         }
 
         return binding.root
